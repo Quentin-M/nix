@@ -1,0 +1,170 @@
+# -----------------
+# Zprof - Use `time ZSH_PROF=1 zsh -i -c exit` to profile startup time
+# -----------------
+
+if [ -n "${ZSH_PROF+1}" ]; then
+    zmodload zsh/zprof
+fi
+
+# -----------------
+# Nix
+# -----------------
+
+# macOS gets this from nix-darwin's /etc/zshenv.
+if [[ $OSTYPE != 'darwin'* && -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+
+# -----------------
+# System profile.d drop-ins (Linux)
+# -----------------
+
+# Source /etc/profile.d/*.sh (1Password token, nix, etc.). We deliberately do
+# NOT source /etc/profile itself: it unconditionally resets PATH (clobbering
+# nix paths) and already re-loops profile.d. Each script runs under `sh`
+# emulation (via a local anon function) so POSIX word-splitting/globbing
+# behaves; exports still land in the environment.
+if [[ $OSTYPE != 'darwin'* && -d /etc/profile.d ]]; then
+  for _pf in /etc/profile.d/*.sh(N); do
+    [[ -r "$_pf" ]] && () { emulate -L sh; source "$1"; } "$_pf"
+  done
+  unset _pf
+fi
+
+# -----------------
+# Environment
+# -----------------
+
+export ZSH_CACHE_DIR=~/.cache
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# -----------------
+# SSH Agent (must be before herdr)
+# -----------------
+
+# macOS: 1Password. Linux: home-manager's ssh-agent service, except over SSH where a
+# forwarded agent is symlinked to a stable path so reattached herdr sessions keep working.
+if [[ $OSTYPE == 'darwin'* ]]; then
+  export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+elif [[ -n "$SSH_CONNECTION" && -S "$SSH_AUTH_SOCK" && "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]]; then
+  ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/ssh_auth_sock"
+  export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+fi
+
+# -----------------
+# Herdr
+# -----------------
+
+# Auto-attach to herdr on SSH login; hosts without herdr stay in plain zsh.
+# Don't start inside a herdr pane: herdr sets HERDR_ENV=1 on every pane it spawns,
+# and those panes inherit the server process's own SSH_CONNECTION, so without this
+# guard every herdr pane re-execs into a nested herdr, forever.
+if [[ -z "$HERDR_ENV" && -o interactive && -n "$SSH_CONNECTION" ]] && (( $+commands[herdr] )); then
+  exec herdr
+fi
+
+# ------------------
+# ZSH / Zim
+# ------------------
+
+WORDCHARS=${WORDCHARS//[\/]} # Remove path separator from WORDCHARS.
+setopt globdots # Show hidden folders in completions
+setopt CORRECT # Prompt for spelling correction of commands.
+SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? ' # Customize spelling correction prompt.
+
+ZIM_HOME=${ZDOTDIR}/.zim
+# zimfw.zsh is linked from nixpkgs by home-manager.
+# The zimrc is a nix store symlink (mtime = epoch), so an mtime check never rebuilds
+# init.zsh. Track the resolved store path instead.
+_zimrc_src=${${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc}:A}
+if [[ ! -e ${ZIM_HOME}/init.zsh || ! -r ${ZIM_HOME}/.zimrc-src || $(< ${ZIM_HOME}/.zimrc-src) != ${_zimrc_src} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q && print -r -- ${_zimrc_src} >| ${ZIM_HOME}/.zimrc-src
+fi
+unset _zimrc_src
+source ${ZIM_HOME}/init.zsh
+unsetopt share_history # Don't share history across tabs (zim's environment module turns it on)
+# Option+Left/Right as sent by herdr and stock terminals (zim's input module skips these).
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
+
+# ------------------------------
+# Module Configuration (Post-init)
+# ------------------------------
+
+setopt AUTO_CD HIST_REDUCE_BLANKS INC_APPEND_HISTORY
+alias -g L='| less'
+alias -g J='| jq'
+alias -s json=nvim
+
+zstyle ':fzf-tab:complete:(cd|z):*' fzf-preview 'eza -1 --color=always $realpath'
+# fzf-tab ignores FZF_DEFAULT_OPTS (catppuccin colors) unless told otherwise.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
+# Catppuccin Mocha for fast-syntax-highlighting (ini linked by home-manager). fast-theme
+# compiles it into $FAST_WORK_DIR once; later shells load the compiled theme.
+[[ -r ${FAST_WORK_DIR}/current_theme.zsh && $(< ${FAST_WORK_DIR}/current_theme.zsh) == *'"catppuccin-mocha"'* ]] \
+  || fast-theme -q XDG:catppuccin-mocha
+
+# `eval "$(tool init zsh)"` forks the tool on every shell start (~100ms each).
+# Cache the output and source that.
+_cache_init() {
+  local name=$1 bin=${commands[$2]:A}
+  [[ -n $bin ]] || return
+  # Key on binary store path and args, so a version bump or flag change regenerates.
+  local f=$ZSH_CACHE_DIR/init-$name-${bin:h:h:t}-${(j:-:)${@:3}//[^a-zA-Z0-9]/}.zsh
+  if [[ ! -s $f ]]; then
+    rm -f $ZSH_CACHE_DIR/init-$name-*(N)
+    "${@:2}" >| $f && zcompile $f
+  fi
+  source $f
+}
+
+# Order matters: atuin last among key-binders (owns Ctrl-R), starship last overall.
+# mise runs as shims: no per-prompt hook. No [env]/hooks in use; `mise reshim` after outside installs.
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+_cache_init mise-completion mise completion zsh
+_cache_init zoxide zoxide init zsh --hook pwd
+_cache_init direnv direnv hook zsh
+_cache_init atuin atuin init zsh --disable-up-arrow
+_cache_init starship starship init zsh
+unfunction _cache_init
+
+# Render starship in the background: slow git or mise shims on a loaded box never block the
+# shell, and their timeout warnings go to /dev/null. The left prompt keeps its last render
+# (same height, no jump) until the new one lands; the right one clears.
+typeset -gA _starship_fds # fd -> variable it fills
+_starship_left='%F{green}❯%f ' _starship_right=''
+PROMPT='${_starship_left}' RPROMPT='${_starship_right}'
+_starship_spawn() { # <var> [--right]
+  local fd
+  exec {fd}< <(starship prompt "${@:2}" "${_starship_args[@]}" 2>/dev/null)
+  _starship_fds[$fd]=$1
+  zle -F $fd _starship_async_done
+}
+_starship_async_precmd() {
+  local fd
+  for fd in ${(k)_starship_fds}; do zle -F $fd; exec {fd}<&-; done
+  _starship_fds=() _starship_right=''
+  _starship_args=(
+    --terminal-width="$COLUMNS" --keymap="${KEYMAP:-}" --status="${STARSHIP_CMD_STATUS:-}"
+    --pipestatus="${STARSHIP_PIPE_STATUS[*]:-}" --cmd-duration="${STARSHIP_DURATION:-}"
+    --jobs="$STARSHIP_JOBS_COUNT"
+  )
+  _starship_spawn _starship_left
+  _starship_spawn _starship_right --right
+}
+_starship_async_done() {
+  local fd=$1 out
+  IFS= read -rd '' -u $fd out
+  zle -F $fd; exec {fd}<&-
+  typeset -g ${_starship_fds[$fd]}=$out
+  unset "_starship_fds[$fd]"
+  zle reset-prompt
+}
+add-zsh-hook precmd _starship_async_precmd # after starship's precmd, which captures $?
+
+if [ -n "${ZSH_PROF+1}" ]; then
+    zprof
+fi
