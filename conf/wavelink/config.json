@@ -1,0 +1,507 @@
+{
+  "apps" : [
+    {
+      "bundleURL" : "file:\/\/\/Applications\/Google%20Chrome.app\/",
+      "id" : "com.google.Chrome",
+      "name" : "Google Chrome"
+    },
+    {
+      "bundleURL" : "file:\/\/\/Applications\/Slack.app\/",
+      "id" : "com.tinyspeck.slackmacgap",
+      "name" : "Slack"
+    },
+    {
+      "id" : "com.elgato.wavelink.system-audio",
+      "name" : "System Audio"
+    },
+    {
+      "bundleURL" : "file:\/\/\/Applications\/Brave%20Browser.app\/",
+      "id" : "com.brave.Browser",
+      "name" : "Brave Browser"
+    }
+  ],
+  "channelToMix" : [
+    {
+      "channelID" : "C35ED9F2-C6B6-4E3B-9A72-43328887C04E",
+      "fxSelect" : 3,
+      "id" : "C35ED9F2-C6B6-4E3B-9A72-43328887C04E - 1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mixID" : "1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "channelID" : "650238CA-F4FA-4589-AFD5-8701AF59A2C2",
+      "fxSelect" : 3,
+      "id" : "650238CA-F4FA-4589-AFD5-8701AF59A2C2 - F624D679-F33F-4128-B817-F667DFC66E60",
+      "mixID" : "F624D679-F33F-4128-B817-F667DFC66E60",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "channelID" : "E1FC2A2E-DC6B-4458-8C2A-97E09D10BCF1",
+      "fxSelect" : 3,
+      "id" : "E1FC2A2E-DC6B-4458-8C2A-97E09D10BCF1 - 1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mixID" : "1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "channelID" : "58775766-A059-429E-B4C9-FCE4A2096712",
+      "fxSelect" : 3,
+      "id" : "58775766-A059-429E-B4C9-FCE4A2096712 - F624D679-F33F-4128-B817-F667DFC66E60",
+      "mixID" : "F624D679-F33F-4128-B817-F667DFC66E60",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "channelID" : "58775766-A059-429E-B4C9-FCE4A2096712",
+      "fxSelect" : 3,
+      "id" : "58775766-A059-429E-B4C9-FCE4A2096712 - 1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mixID" : "1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "channelID" : "650238CA-F4FA-4589-AFD5-8701AF59A2C2",
+      "fxSelect" : 3,
+      "id" : "650238CA-F4FA-4589-AFD5-8701AF59A2C2 - 1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mixID" : "1B9F2CED-EF53-4384-8135-767444E270D0",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "channelID" : "0E5650E1-E2D6-4016-9541-EDAD945F8B49",
+      "fxSelect" : 3,
+      "id" : "0E5650E1-E2D6-4016-9541-EDAD945F8B49 - F624D679-F33F-4128-B817-F667DFC66E60",
+      "mixID" : "F624D679-F33F-4128-B817-F667DFC66E60",
+      "mute" : false,
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    }
+  ],
+  "channels" : [
+    {
+      "bus" : 4,
+      "duckedBy" : [
+
+      ],
+      "effectRack" : {
+        "effects" : [
+
+        ],
+        "enabled" : true
+      },
+      "id" : "E1FC2A2E-DC6B-4458-8C2A-97E09D10BCF1",
+      "mute" : false,
+      "name" : "Brave Browser",
+      "source" : {
+        "applications" : [
+          "com.brave.Browser"
+        ],
+        "type" : "applications"
+      },
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "bus" : 1,
+      "duckedBy" : [
+
+      ],
+      "effectRack" : {
+        "effects" : [
+
+        ],
+        "enabled" : true
+      },
+      "id" : "C35ED9F2-C6B6-4E3B-9A72-43328887C04E",
+      "mute" : false,
+      "name" : "Google Chrome",
+      "source" : {
+        "applications" : [
+          "com.google.Chrome"
+        ],
+        "type" : "applications"
+      },
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "bus" : 0,
+      "duckedBy" : [
+
+      ],
+      "effectRack" : {
+        "effects" : [
+
+        ],
+        "enabled" : true
+      },
+      "id" : "58775766-A059-429E-B4C9-FCE4A2096712",
+      "mute" : false,
+      "name" : "Slack",
+      "source" : {
+        "applications" : [
+          "com.tinyspeck.slackmacgap"
+        ],
+        "type" : "applications"
+      },
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "bus" : 2,
+      "duckedBy" : [
+
+      ],
+      "effectRack" : {
+        "effects" : [
+
+        ],
+        "enabled" : true
+      },
+      "id" : "650238CA-F4FA-4589-AFD5-8701AF59A2C2",
+      "mute" : false,
+      "name" : "All audio",
+      "source" : {
+        "applications" : [
+          "com.elgato.wavelink.system-audio"
+        ],
+        "type" : "applications"
+      },
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "bus" : 3,
+      "duckedBy" : [
+
+      ],
+      "effectRack" : {
+        "effects" : [
+          {
+            "bypass" : false,
+            "description" : {
+              "manufacturer" : 1298884206,
+              "subType" : 1299071858,
+              "type" : 1635083896
+            },
+            "effectState" : "YnBsaXN0MDDYAQIDBAUGBwgJChITFBUWF1R0eXBlXGVsZW1lbnQtbmFtZVd2ZXJzaW9uXG1hbnVmYWN0dXJlclRuYW1lV3N1YnR5cGVUZGF0YV8QD2p1Y2VQbHVnaW5TdGF0ZRJhdWZ40gsMDRBRMVEy0Q4PUTBVSW5wdXTRDhFWT3V0cHV0EAASTWtmblhVbnRpdGxlZBJNbkNyTxAsAAAAAAAAAAAAAAAEADYRkwAAAAAANnQiPwAAAA3ZhaAAAAAAW+uDGgAAAABPEORWQzIh2wAAADw\/eG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+IDxQYXJhbWV0ZXJzPjxQQVJBTSBpZD0icGhhc2VfaW52ZXJ0IiB2YWx1ZT0iMC4wIi8+PFBBUkFNIGlkPSJzb3VyY2Vfc2VsZWN0IiB2YWx1ZT0iMC4wIi8+PFBBUkFNIGlkPSJzd2FwIiB2YWx1ZT0iMC4wIi8+PFBBUkFNIGlkPSJ0cmltIiB2YWx1ZT0iLTIuNjgyMjA5MDE0ODkyNTc4ZS03Ii8+PC9QYXJhbWV0ZXJzPgAACAAZAB4AKwAzAEAARQBNAFIAZABpAG4AcAByAHUAdwB9AIAAhwCJAI4AlwCcAMsAAAAAAAACAQAAAAAAAAAYAAAAAAAAAAAAAAAAAAABsg==",
+            "id" : "24F3FEEF-93A0-4EF0-B242-A85626BEE0A6",
+            "name" : "MONOCORE"
+          },
+          {
+            "bypass" : false,
+            "description" : {
+              "manufacturer" : 1298230901,
+              "subType" : 1198876528,
+              "type" : 1635083896
+            },
+            "effectState" : "YnBsaXN0MDDYAQIDBAUGBwgJCgsTFBUWF1RkYXRhV3ZlcnNpb25cZWxlbWVudC1uYW1lVG5hbWVfEA9qdWNlUGx1Z2luU3RhdGVXc3VidHlwZVxtYW51ZmFjdHVyZXJUdHlwZU8QJAAAAAAAAAAAAAAAAw4GncA+gAAALhhs6AAAAABFYM\/kP1mZmRAA0gwNDhFRMVEy0Q8QUTBVSW5wdXTRDxJWT3V0cHV0WFVudGl0bGVkTxC\/VkMyIbYAAAA8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI\/PiA8Uk5OVm9pY2VQYXJhbXM+PFBBUkFNIGlkPSJWQUQgUmVsZWFzZSIgdmFsdWU9IjI1MC4wIi8+PFBBUkFNIGlkPSJWQUQgVGhyZXNob2xkIiB2YWx1ZT0iMC41Ii8+PFBBUkFNIGlkPSJieXBhc3MiIHZhbHVlPSIwLjAiLz48L1JOTlZvaWNlUGFyYW1zPgASR3VncBJNYW51EmF1ZngACAAZAB4AJgAzADgASgBSAF8AZACLAI0AkgCUAJYAmQCbAKEApACrALQBdgF7AYAAAAAAAAACAQAAAAAAAAAYAAAAAAAAAAAAAAAAAAABhQ==",
+            "id" : "B3CA84F7-425A-41D1-AE48-1251A8D29BB8",
+            "name" : "Elgato Noise Removal",
+            "windowPosition" : "{{1689, 412}, {854, 632}}"
+          },
+          {
+            "bypass" : false,
+            "description" : {
+              "manufacturer" : 1634758764,
+              "subType" : 1851942257,
+              "type" : 1635083896
+            },
+            "effectState" : "YnBsaXN0MDDYAQIDBAUGBwgJCgsMDQ4PEFRuYW1lXG1hbnVmYWN0dXJlcl1udW1iZXJPZkJhbmRzVHR5cGVXc3VidHlwZVRkYXRhV3ZlcnNpb25eUGFyYW1ldHJpY1R5cGVYVW50aXRsZWQSYXBwbBAIEmF1ZngSbmJlcU8RApQAAAAAAAAAAAAAAFEAAAAAAAAAAAAAA+gAAAAAAAAD6QAAAAAAAAPqAAAAAAAAA+sAAAAAAAAD7AAAAAAAAAPtP4AAAAAAA+4\/gAAAAAAD7z+AAAAAAAPwP4AAAAAAA\/E\/gAAAAAAD8j+AAAAAAAPzP4AAAAAAA\/Q\/gAAAAAAD9T+AAAAAAAP2P4AAAAAAA\/c\/gAAAAAAH0AAAAAAAAAfRAAAAAAAAB9JBAAAAAAAH00AAAAAAAAfUAAAAAAAAB9UAAAAAAAAH1gAAAAAAAAfXAAAAAAAAB9gAAAAAAAAH2QAAAAAAAAfaAAAAAAAAB9sAAAAAAAAH3AAAAAAAAAfdAAAAAAAAB94AAAAAAAAH3wAAAAAAAAu4Q3oAAAAAC7lFegAAAAALukYcQAAAAAu7QvFd9wAAC7xDLmK4AAALvUN7+\/UAAAu+Q7YOcgAAC79EA4jBAAALwEQ+EI0AAAvBRIlR8AAAC8JExmzVAAALw0UPXEYAAAvERU8nRAAAC8VFlaqiAAALxkXYQ\/sAAAvHRhxAAAAAD6DAQAAAAAAPoUAAAAAAAA+iAAAAAAAAD6MAAAAAAAAPpAAAAAAAAA+lAAAAAAAAD6YAAAAAAAAPpwAAAAAAAA+oAAAAAAAAD6kAAAAAAAAPqgAAAAAAAA+rAAAAAAAAD6wAAAAAAAAPrQAAAAAAAA+uAAAAAAAAD68AAAAAAAATiD+AAAAAABOJP8AAAAAAE4o\/AAAAAAATiz8AAAAAABOMPwAAAAAAE40\/AAAAAAATjj8AAAAAABOPPwAAAAAAE5A\/AAAAAAATkT8AAAAAABOSPwAAAAAAE5M\/AAAAAAATlD8AAAAAABOVPwAAAAAAE5Y\/AAAAAAATlz8AAAAQABALAAgAGQAeACsAOQA+AEYASwBTAGIAawBwAHIAdwB8AxQDFgAAAAAAAAIBAAAAAAAAABEAAAAAAAAAAAAAAAAAAAMY",
+            "id" : "1ADE7918-7639-4297-AE62-5EDE2FCDF005",
+            "name" : "NBandEQ"
+          },
+          {
+            "bypass" : false,
+            "description" : {
+              "manufacturer" : 1298230901,
+              "subType" : 1227913834,
+              "type" : 1635083896
+            },
+            "effectState" : "YnBsaXN0MDDYAQIDBAUGBwgJERITFBUWF1xlbGVtZW50LW5hbWVcbWFudWZhY3R1cmVyVHR5cGVfEA9qdWNlUGx1Z2luU3RhdGVXc3VidHlwZVRuYW1lVGRhdGFXdmVyc2lvbtIKCwwPUTFRMtENDlEwVUlucHV00Q0QVk91dHB1dBJNYW51EmF1ZnhPEQGaVkMyIZEBAAA8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI\/PiA8Y29tcHJlc3NvclBhcmFtcz48UEFSQU0gaWQ9ImF0dGFjayIgdmFsdWU9IjEwLjAxODUwMTI4MTczODI4Ii8+PFBBUkFNIGlkPSJhdXRvbWFrZXVwIiB2YWx1ZT0iMS4wIi8+PFBBUkFNIGlkPSJieXBhc3MiIHZhbHVlPSIwLjAiLz48UEFSQU0gaWQ9ImdhaW4iIHZhbHVlPSIxLjAiLz48UEFSQU0gaWQ9InJhdGlvIiB2YWx1ZT0iMy4wMjk5OTk5NzEzODk3NzEiLz48UEFSQU0gaWQ9InJlbGVhc2UiIHZhbHVlPSI5OS44NDk4ODQwMzMyMDMxMiIvPjxQQVJBTSBpZD0idGhyZXNob2xkIiB2YWx1ZT0iLTEzLjY4MDAwMTI1ODg1MDEiLz48ZWRpdG9yU2V0dGluZ3Mgc2hvdWxkTG9hZFR1dG9yaWFsPSIwIi8+PC9jb21wcmVzc29yUGFyYW1zPgASSTB6alhVbnRpdGxlZE8QRAAAAAAAAAAAAAAABwAwS38AAAAABnRQCz6WlpcUf+94P4AAACPh5Gs\/gAAALB7uSD9iYjUuGGzoAAAAAEEBKAc+0qQUEAAACAAZACYAMwA4AEoAUgBXAFwAZABpAGsAbQBwAHIAeAB7AIIAhwCMAioCLwI4An8AAAAAAAACAQAAAAAAAAAYAAAAAAAAAAAAAAAAAAACgQ==",
+            "id" : "FF76B8F0-5C44-4DC3-B19F-03A5706A478D",
+            "name" : "Elgato Compressor"
+          }
+        ],
+        "enabled" : true
+      },
+      "id" : "0E5650E1-E2D6-4016-9541-EDAD945F8B49",
+      "mute" : false,
+      "name" : "Scarlett 6i6 USB",
+      "source" : {
+        "input" : {
+          "deviceID" : "AppleUSBAudioEngine:Focusrite:Scarlett 6i6 USB:00079550:1,2",
+          "selection" : {
+            "busID" : "generic",
+            "type" : "busID"
+          }
+        },
+        "type" : "device"
+      },
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    }
+  ],
+  "devices" : [
+    {
+      "audioInputs" : [
+        {
+          "id" : "generic"
+        }
+      ],
+      "audioOutputs" : [
+
+      ],
+      "features" : {
+
+      },
+      "id" : "83520152-C571-4342-83FB-0BC91AE0001E",
+      "kind" : {
+        "type" : "loopback",
+        "value" : "ABAC032D-5B76-41A9-9A62-013B342419C5"
+      },
+      "name" : "Elgato Wave Link Speakers\/Headphones"
+    },
+    {
+      "audioInputs" : [
+
+      ],
+      "audioOutputs" : [
+        {
+          "id" : "generic"
+        }
+      ],
+      "features" : {
+
+      },
+      "id" : "18FCE8B8-CF68-4675-818E-35324CF511DA",
+      "kind" : {
+        "type" : "loopback",
+        "value" : "B79CB868-41D7-4CED-B64A-5A307009A22D"
+      },
+      "name" : "Microphone Out"
+    },
+    {
+      "audioInputs" : [
+
+      ],
+      "audioOutputs" : [
+        {
+          "id" : "generic"
+        }
+      ],
+      "features" : {
+
+      },
+      "id" : "DC1C4ACE-2CF6-4589-A06C-990D7C1C7428",
+      "kind" : {
+        "type" : "loopback",
+        "value" : "ABAC032D-5B76-41A9-9A62-013B342419C5"
+      },
+      "name" : "Elgato Wave Link Speakers\/Headphones Out"
+    },
+    {
+      "audioInputs" : [
+        {
+          "id" : "generic"
+        }
+      ],
+      "audioOutputs" : [
+
+      ],
+      "features" : {
+
+      },
+      "id" : "9B0D56C2-A9DE-40E4-8A47-574A3ECA7A5B",
+      "kind" : {
+        "type" : "loopback",
+        "value" : "B79CB868-41D7-4CED-B64A-5A307009A22D"
+      },
+      "name" : "Microphone"
+    },
+    {
+      "audioInputs" : [
+        {
+          "id" : "generic"
+        }
+      ],
+      "audioOutputs" : [
+        {
+          "id" : "generic"
+        }
+      ],
+      "features" : {
+
+      },
+      "id" : "AppleUSBAudioEngine:Focusrite:Scarlett 6i6 USB:00079550:1,2",
+      "kind" : {
+        "type" : "thirdParty"
+      },
+      "name" : "Scarlett 6i6 USB"
+    }
+  ],
+  "hardwareChannelsProvisionedDeviceIDs" : [
+
+  ],
+  "loopbackDevices" : [
+    {
+      "id" : "ABAC032D-5B76-41A9-9A62-013B342419C5",
+      "inputDeviceHidden" : false,
+      "inputDeviceID" : "83520152-C571-4342-83FB-0BC91AE0001E",
+      "inputDeviceName" : "Speakers\/Headphones",
+      "outputDeviceHidden" : true,
+      "outputDeviceID" : "DC1C4ACE-2CF6-4589-A06C-990D7C1C7428",
+      "outputDeviceName" : "Speakers\/Headphones Out"
+    },
+    {
+      "id" : "B79CB868-41D7-4CED-B64A-5A307009A22D",
+      "inputDeviceHidden" : false,
+      "inputDeviceID" : "9B0D56C2-A9DE-40E4-8A47-574A3ECA7A5B",
+      "inputDeviceName" : "Microphone",
+      "outputDeviceHidden" : true,
+      "outputDeviceID" : "18FCE8B8-CF68-4675-818E-35324CF511DA",
+      "outputDeviceName" : "Microphone Out"
+    }
+  ],
+  "mainOutput" : {
+    "deviceID" : "AppleUSBAudioEngine:Focusrite:Scarlett 6i6 USB:00079550:1,2",
+    "selection" : {
+      "busID" : "generic",
+      "type" : "busID"
+    }
+  },
+  "mixes" : [
+    {
+      "alwaysShowsVolumeSliders" : true,
+      "bus" : 0,
+      "icon" : {
+        "name" : "Icons\/headphones_m"
+      },
+      "id" : "1B9F2CED-EF53-4384-8135-767444E270D0",
+      "maximizer" : 0,
+      "maximizerBypassed" : true,
+      "mute" : false,
+      "name" : "Speakers\/Headphones",
+      "outputs" : [
+        {
+          "deviceID" : "AppleUSBAudioEngine:Focusrite:Scarlett 6i6 USB:00079550:1,2",
+          "selection" : {
+            "busID" : "generic",
+            "type" : "busID"
+          }
+        },
+        {
+          "deviceID" : "DC1C4ACE-2CF6-4589-A06C-990D7C1C7428",
+          "selection" : {
+            "busID" : "generic",
+            "type" : "busID"
+          }
+        }
+      ],
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    },
+    {
+      "alwaysShowsVolumeSliders" : true,
+      "bus" : 1,
+      "icon" : {
+        "name" : "Icons\/stream_m"
+      },
+      "id" : "F624D679-F33F-4128-B817-F667DFC66E60",
+      "maximizer" : 0,
+      "maximizerBypassed" : true,
+      "mute" : false,
+      "name" : "Microphone",
+      "outputs" : [
+        {
+          "deviceID" : "18FCE8B8-CF68-4675-818E-35324CF511DA",
+          "selection" : {
+            "busID" : "generic",
+            "type" : "busID"
+          }
+        }
+      ],
+      "volume" : {
+        "range" : [
+          -60,
+          0
+        ],
+        "value" : 0
+      }
+    }
+  ],
+  "version" : 14
+}

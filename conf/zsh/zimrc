@@ -1,0 +1,25 @@
+# Base module
+zmodule environment
+zmodule input
+
+# Syntax highlighting.
+zmodule zdharma-continuum/fast-syntax-highlighting
+
+# Completion
+
+## moooooore completions (fpath only, must be before completion)
+zmodule zsh-users/zsh-completions
+## activate!
+zmodule completion
+
+## Calls compinit internally, so it must come after completion.
+## (mise, starship, zoxide, atuin, direnv init is cached in zshrc.)
+zmodule joke/zim-kubectl
+
+## autosuggestions when typing
+zmodule zsh-users/zsh-autosuggestions
+## up/down-arrows-driven CTRL-R
+zmodule zsh-users/zsh-history-substring-search
+
+## fzf-driven completion
+zmodule Aloxaf/fzf-tab

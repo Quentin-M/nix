@@ -1,0 +1,3 @@
+result/
+.vagrant/
+conf/weechat/sec.conf

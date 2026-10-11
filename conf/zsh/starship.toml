@@ -1,0 +1,158 @@
+add_newline = true
+# The prompt renders in the background (zshrc), so slow shims can take their time.
+command_timeout = 2000
+scan_timeout = 500
+palette = "catppuccin_mocha"
+
+format = """
+[](surface0)\
+$os\
+([  ](bg:lavender fg:surface0)$username[  ](bg:lavender fg:surface0 dimmed)$hostname[](bg:surface0 fg:lavender))\
+[  ](bg:peach fg:surface0)\
+$directory\
+[](bg:green fg:peach)\
+$git_branch\
+${custom.worktree}\
+$git_status\
+[](fg:green)\
+$fill\
+$all\
+$line_break\
+$character
+"""
+
+# Environment and run state on the right, off the powerline.
+right_format = """
+$status\
+$jobs\
+$cmd_duration\
+$direnv\
+$nix_shell\
+$mise\
+$aws\
+$kubernetes
+"""
+
+[fill]
+symbol = '·'
+style = 'crust'
+
+[directory]
+style = "bg:peach fg:base"
+format = "[$path ]($style)[$read_only]($read_only_style)"
+truncate_to_repo = true
+truncation_length = 3
+truncation_symbol = "./"
+
+[git_branch]
+symbol = " "
+format = "[ $symbol$branch(:$remote_branch) ]($style)"
+style = "bg:green fg:base"
+
+[git_commit]
+disabled = true
+
+[git_status]
+format = '([$all_status$ahead_behind]($style))'
+conflicted = " "
+ahead = "⇡ "
+behind = "⇣ "
+diverged = "⇕ "
+untracked = " "
+stashed	= " "
+modified = " "
+staged = "󰆧 "
+renamed	= ""
+deleted	= ""
+typechanged	= ""
+up_to_date = " "
+style = "bg:green fg:base"
+
+# Lines added/deleted, inside the green git segment.
+[jobs]
+format = '[$symbol$number]($style) '
+
+[nix_shell]
+format = '[$symbol$state]($style) '
+symbol = " "
+
+[username]
+format = '[$user]($style)'
+style_root = 'bg:lavender fg:base'
+style_user = 'bg:lavender fg:base'
+
+[hostname]
+ssh_only = true
+ssh_symbol = ''
+format = '[$ssh_symbol$hostname]($style)'
+style = 'bg:lavender fg:base'
+aliases = { "Quentins-MacBook-Air" = "macbook" }
+
+# Linked worktree name; hidden in the main checkout.
+[custom.worktree]
+# A linked worktree's git dir is .git/worktrees/<name>: one git call, empty output hides it.
+command = 'git rev-parse --git-dir | sed -n "s|.*/worktrees/||p"'
+require_repo = true
+shell = ["sh"]
+symbol = "󰙅 "
+format = "[ $symbol$output ]($style)"
+style = "bg:green fg:base"
+
+[gcloud]
+disabled = true
+
+[status]
+disabled = false
+format = '[$symbol$status]($style) '
+
+[direnv]
+disabled = false
+format = '[$symbol$loaded]($style) '
+
+# Profile only (region is noise); hidden when no AWS_PROFILE.
+[aws]
+format = '([$symbol$profile]($style) )'
+symbol = " "
+style = "bold yellow"
+
+[kubernetes]
+disabled = false
+format = '[$symbol$context( \($namespace\))]($style) '
+symbol = "󱃾 "
+style = "bold blue"
+
+[cmd_duration]
+min_time = 2_000
+format = "[  $duration ]($style)"
+style = "white"
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+[mise]
+disabled = false
