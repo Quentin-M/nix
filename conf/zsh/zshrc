@@ -74,6 +74,21 @@ setopt globdots # Show hidden folders in completions
 setopt CORRECT # Prompt for spelling correction of commands.
 SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? ' # Customize spelling correction prompt.
 
+# /etc/zshenv and home-manager each add every nix profile's zsh dirs, so the same functions
+# dir lands in fpath 3x and zim's completion check globs + stats ~3000 files. Keep the first
+# of each resolved dir, drop missing ones.
+() {
+  local d; local -A seen; local -a dirs
+  for d in $fpath; do
+    [[ -d $d ]] && (( ! ${+seen[${d:A}]} )) || continue
+    seen[${d:A}]=1 dirs+=($d)
+  done
+  fpath=($dirs)
+}
+
+# fast-syntax-highlighting probes for a writable work dir with `mkdir -p` otherwise.
+FAST_WORK_DIR=$ZSH_CACHE_DIR/fsh
+
 ZIM_HOME=${ZDOTDIR}/.zim
 # zimfw.zsh is linked from nixpkgs by home-manager.
 # The zimrc is a nix store symlink (mtime = epoch), so an mtime check never rebuilds
@@ -107,19 +122,44 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 [[ -r ${FAST_WORK_DIR}/current_theme.zsh && $(< ${FAST_WORK_DIR}/current_theme.zsh) == *'"catppuccin-mocha"'* ]] \
   || fast-theme -q XDG:catppuccin-mocha
 
-# `eval "$(tool init zsh)"` forks the tool on every shell start (~100ms each).
-# Cache the output and source that.
+# `eval "$(tool init zsh)"` execs the tool on every shell start (~100ms each).
+# Cache the output and source that. _cache_fix_<name> may rewrite $init before it is cached,
+# and _cache_key[<name>] names extra inputs baked in by that rewrite.
+typeset -A _cache_key=(starship ${${STARSHIP_CONFIG:-$HOME/.config/starship.toml}:A:t:r})
 _cache_init() {
-  local name=$1 bin=${commands[$2]:A}
+  local name=$1 bin=${commands[$2]:A} init
   [[ -n $bin ]] || return
   # Key on binary store path and args, so a version bump or flag change regenerates.
-  local f=$ZSH_CACHE_DIR/init-$name-${bin:h:h:t}-${(j:-:)${@:3}//[^a-zA-Z0-9]/}.zsh
+  local f=$ZSH_CACHE_DIR/init-$name-${bin:h:h:t}${_cache_key[$name]:+-$_cache_key[$name]}-${(j:-:)${@:3}//[^a-zA-Z0-9]/}.zsh
   if [[ ! -s $f ]]; then
     rm -f $ZSH_CACHE_DIR/init-$name-*(N)
-    "${@:2}" >| $f && zcompile $f
+    init=$("${@:2}") || return
+    (( ! $+functions[_cache_fix_$name] )) || _cache_fix_$name || return
+    print -r -- $init >| $f && zcompile $f
   fi
   source $f
 }
+# starship's init execs `starship prompt --continuation` per shell; bake the result in.
+_cache_fix_starship() {
+  local ps2
+  ps2=$(starship prompt --continuation) || return
+  init=${init/PROMPT2=\"\$\(*prompt --continuation\)\"/PROMPT2=${(q+)ps2}}
+}
+
+# atuin's init execs `atuin uuid` for a new session id; build the same UUIDv7 in zsh.
+_atuin_session() {
+  emulate -L zsh -o no_multibyte
+  zmodload zsh/datetime zsh/system || return
+  local raw c h hex
+  sysread -s 10 raw </dev/urandom && (( $#raw == 10 )) || return
+  for c in ${(s::)raw}; do printf -v h %02x "'$c"; hex+=$h; done
+  printf -v ATUIN_SESSION '%012x7%s%x%s' \
+    $(( ${EPOCHREALTIME%.*} * 1000 + 10#${${EPOCHREALTIME#*.}[1,3]} )) \
+    ${hex[1,3]} $(( 0x${hex[4]} & 3 | 8 )) ${hex[5,19]}
+  export ATUIN_SESSION ATUIN_SHLVL=$SHLVL
+}
+[[ -n ${ATUIN_SESSION:-} && ${ATUIN_SHLVL:-} == $SHLVL ]] || _atuin_session
+unfunction _atuin_session
 
 # Order matters: atuin last among key-binders (owns Ctrl-R), starship last overall.
 # mise runs as shims: no per-prompt hook. No [env]/hooks in use; `mise reshim` after outside installs.
@@ -129,7 +169,8 @@ _cache_init zoxide zoxide init zsh --hook pwd
 _cache_init direnv direnv hook zsh
 _cache_init atuin atuin init zsh --disable-up-arrow
 _cache_init starship starship init zsh
-unfunction _cache_init
+unfunction _cache_init _cache_fix_starship
+unset _cache_key
 
 # Render starship in the background: slow git or mise shims on a loaded box never block the
 # shell, and their timeout warnings go to /dev/null. The left prompt keeps its last render

@@ -3,7 +3,9 @@ zmodule environment
 zmodule input
 
 # Syntax highlighting.
-zmodule zdharma-continuum/fast-syntax-highlighting
+## Its only `uname` use is `$(uname -a) == (#i)*darwin*`: answer from $OSTYPE, skip the exec.
+zmodule zdharma-continuum/fast-syntax-highlighting \
+  --cmd 'uname() { print -r -- $OSTYPE }; source {}/fast-syntax-highlighting.plugin.zsh; unfunction uname'
 
 # Completion
 
