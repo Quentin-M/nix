@@ -115,9 +115,11 @@ in {
 
   # Also set in home.nix; here it makes nix-darwin write /etc/zshenv to load the environment.
   # Zim's completion module owns compinit; the global one in /etc/zshrc makes it warn.
+  # Starship owns the prompt; the default `promptinit; prompt suse` only costs startup time.
   programs.zsh = {
     enable = true;
     enableCompletion = false;
     enableBashCompletion = false;
+    promptInit = "";
   };
 }

@@ -259,6 +259,12 @@ in
       initContent = builtins.readFile ../conf/zsh/zshrc;
       inherit shellAliases;
     };
+    # home-manager's history block runs `mkdir -p "$(dirname "$HISTFILE")"`: two execs per
+    # shell (~100ms each under EDR) for a dir that is ZDOTDIR itself.
+    home.file."${lib.removePrefix "${config.home.homeDirectory}/" config.programs.zsh.dotDir}/.zshrc".text = lib.mkForce (
+      builtins.replaceStrings [''mkdir -p "$(dirname "$HISTFILE")"''] [''[[ -d ''${HISTFILE:h} ]] || mkdir -p ''${HISTFILE:h}'']
+      config.programs.zsh.initContent
+    );
     xdg.configFile."zsh/.zimrc".source = ../conf/zsh/zimrc;
     xdg.configFile."zsh/.zim/zimfw.zsh".source = "${zimfw}/zimfw.zsh";
     xdg.configFile."starship.toml".source = ../conf/zsh/starship.toml;
