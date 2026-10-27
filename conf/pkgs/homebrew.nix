@@ -102,6 +102,7 @@ let
         "slack"
         "drawio"
         "datagrip"
+        "temurin@21"
       ];
     in common ++ (if isPro then pro else home);
 
