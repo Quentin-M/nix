@@ -20,7 +20,7 @@ Launch each app once, grant what it asks in System Settings → Privacy & Securi
 | Loop | Accessibility | |
 | Thaw | Accessibility, Screen Recording | |
 | Hammerspoon | Accessibility | Volume keys -> Wave Link |
-| CleanShot X | Screen Recording | |
+| Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings |
 | Stats | | |
 | OpenDisk | Full Disk Access, to scan system folders | No login item needed |
 

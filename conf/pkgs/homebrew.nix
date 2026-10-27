@@ -70,7 +70,7 @@ let
       common = [
         "brave-browser"
         "iterm2"
-        "cleanshot"
+        "bettershot"
         "claude"
         "orbstack"
         "zed"
