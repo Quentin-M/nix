@@ -31,13 +31,15 @@ in {
   # Fonts
   fonts.packages = with pkgs; [meslo-lgs-nf];
 
-  # BitMEX internal PKI root CA for Node (IT appends this to /etc/zshrc, which nix-darwin owns).
+  # BitMEX internal PKI root CA for Node (IT appends this to /etc/zshrc and /etc/bashrc, which nix-darwin owns).
   environment.variables = if isPro then {NODE_EXTRA_CA_CERTS = "/etc/bitmex-ca-bundle-2026.pem";} else {};
-  # Move an externally edited /etc/zshrc aside so activation never aborts on it.
+  # Move externally written shell rc files (IT, Nix installer) aside so activation never aborts on them.
   system.activationScripts.preActivation.text = ''
-    if [[ -e /etc/zshrc && $(readlink /etc/zshrc) != /etc/static/zshrc ]]; then
-      mv /etc/zshrc "/etc/zshrc.before-nix-darwin.$(date +%s)"
-    fi
+    for f in zshenv zshrc bashrc; do
+      if [[ -e /etc/$f && $(readlink /etc/$f) != /etc/static/$f ]]; then
+        mv /etc/$f "/etc/$f.before-nix-darwin.$(date +%s)"
+      fi
+    done
   '';
 
   # System packages.
