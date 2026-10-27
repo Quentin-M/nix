@@ -74,6 +74,7 @@
     # k8s / deploy
     kubelogin-oidc # kubectl oidc-login
     kubernetes-helm
+    argocd
     skaffold
 
     # Runtimes / managers
