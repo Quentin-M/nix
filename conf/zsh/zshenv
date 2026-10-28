@@ -1,0 +1,3 @@
+# Agent shells run `zsh -c` and never read .zshrc. Give them bash word splitting and globbing.
+# omp sets CLAUDECODE too. ZSH_EXECUTION_STRING keeps zsh scripts they launch on zsh semantics.
+[[ ! -o interactive && -n $ZSH_EXECUTION_STRING && ( -n $CLAUDECODE || -n $CODEX_THREAD_ID || -n $OMPCODE ) ]] && setopt sh_word_split no_nomatch no_equals
