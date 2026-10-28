@@ -257,6 +257,7 @@ in
         WORKSPACE = workspace;
         TZDIR = "/usr/share/zoneinfo";
       };
+      envExtra = builtins.readFile ../conf/zsh/zshenv;
       initContent = builtins.readFile ../conf/zsh/zshrc;
       inherit shellAliases;
     };
