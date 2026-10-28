@@ -364,9 +364,14 @@ in
           LogLevel = "ERROR";
         } // lib.optionalAttrs pkgs.stdenv.isDarwin {
           IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
+        } // lib.optionalAttrs isPro {
+          ServerAliveInterval = 900;
+          Ciphers = "aes128-ctr,aes192-ctr,aes256-ctr";
+          MACs = "hmac-sha1,hmac-sha2-256,hmac-sha2-512";
         };
       };
     };
+    home.file.".ssh/config".force = true;
 
     # AstroNvim: sideloadInitLua prevents home-manager from writing to nvim/init.lua,
     # which would conflict with our out-of-store symlink for the whole .config/nvim dir.
