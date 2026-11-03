@@ -140,6 +140,29 @@ in
         fi
       '';
 
+      # Herdr app: carries every file of conf/herdr-app into ~/.config/herdr-app, which the app
+      # owns otherwise. Linked so the app's writes (zoom, keys) land in the repo; images copied,
+      # since the app never loads those through a link. Swapped in by rename and only when
+      # different: the app reloads on every change and keeps what it read mid-swap. Its watcher
+      # skips link targets: after editing a mod here, `touch -h` its main.js link.
+      activation.setupHerdrApp = config.lib.dag.entryAfter ["linkGeneration"] ''
+        src=${repo}/conf/herdr-app
+        dst=${config.xdg.configHome}/herdr-app
+        (cd "$src" && find . -type f) | while read -r f; do
+          f=''${f#./}
+          $DRY_RUN_CMD mkdir -p "$dst/$(dirname "$f")"
+          case $f in
+            *.svg | *.png)
+              [[ ! -L $dst/$f ]] && cmp -s "$src/$f" "$dst/$f" && continue
+              $DRY_RUN_CMD cp "$src/$f" "$dst/$f.new" ;;
+            *)
+              [[ $(readlink "$dst/$f") == "$src/$f" ]] && continue
+              $DRY_RUN_CMD ln -sfn "$src/$f" "$dst/$f.new" ;;
+          esac
+          $DRY_RUN_CMD mv -f "$dst/$f.new" "$dst/$f"
+        done
+      '';
+
       # Wave Link: seed the repo config on a fresh Mac (it rewrites the file, so no symlink;
       # `wavelink backup|restore` syncs after that) and list Marketplace plugins to install.
       activation.setupWaveLink = config.lib.dag.entryAfter ["writeBoundary"] ''
