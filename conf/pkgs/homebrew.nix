@@ -70,6 +70,7 @@ let
       common = [
         "brave-browser"
         "iterm2"
+        "herdr-app"
         "bettershot"
         "claude"
         "orbstack"
@@ -93,6 +94,7 @@ let
         "typewhisper/tap/typewhisper"
       ];
       home = [
+        "lulu" # outbound firewall; the work MDM blocks its network extension
         "discord"
         "eddie"
         "hashicorp/tap/hashicorp-vagrant"
@@ -115,17 +117,17 @@ let
         "/Applications/Claude.app"
         "/Applications/Zed.app"
         "/Applications/iTerm.app"
+        "/Applications/Herdr.app"
       ];
       pro = [
         "/Applications/Brave Browser.app"
         "/Applications/Google Chrome.app"
-        "/Applications/Fantastical.app"
+        "/System/Applications/Calendar.app"
         "/System/Applications/Mail.app"
         "/Applications/Slack.app"
         "/Applications/Zed.app"
         "/Applications/iTerm.app"
-        "/Applications/Postico 2.app"
-        "/Applications/DataGrip.app"
+        "/Applications/Herdr.app"
       ];
     in if isPro then pro else home;
 

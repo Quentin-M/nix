@@ -1,5 +1,4 @@
 {
-  isPro ? false,
   isDarwin,
   workspace,
 }:
@@ -33,9 +32,5 @@ let
     j = "journalctl";
   };
 
-  # zsh never re-expands an alias inside itself, so the trailing sudo is the real binary
-  pro = {
-    sudo = "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI --status 2>&1 | grep administrator || /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI --add --reason \"To run sudo commands for a while\" && sudo";
-  };
 in
-  common // (if isDarwin then darwin else linux) // (if isPro then pro else {})
+  common // (if isDarwin then darwin else linux)

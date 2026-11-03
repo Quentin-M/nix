@@ -12,7 +12,7 @@
   repo = "${workspace}/infra/nix";
 
   shellAliases = import ../conf/shell/aliases.nix {
-    inherit isPro workspace;
+    inherit workspace;
     inherit (pkgs.stdenv) isDarwin;
   };
 
@@ -393,4 +393,7 @@ in
     # Hammerspoon (volume keys -> Wave Link) and the Wave Link config sync script
     home.file.".hammerspoon".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/hammerspoon";
     home.file.".local/bin/wavelink".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/wavelink/wavelink.sh";
+
+    # Privileges.app grants admin before sudo, for make and scripts too (~/.local/bin precedes /usr/bin)
+    home.file.".local/bin/sudo" = lib.mkIf isPro { source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/shell/sudo.sh"; };
   }

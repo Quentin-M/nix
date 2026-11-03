@@ -22,6 +22,7 @@ Launch each app once, grant what it asks in System Settings → Privacy & Securi
 | Hammerspoon | Accessibility | Volume keys -> Wave Link |
 | Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings |
 | Stats | | |
+| LuLu (personal only) | System Settings → General → Login Items & Extensions → Network Extensions: allow LuLu, then Allow its filter configuration | Starts at login by itself |
 | OpenDisk | Full Disk Access, to scan system folders | No login item needed |
 
 - Set 1Password to Cmd+Shift+P
