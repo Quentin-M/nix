@@ -32,7 +32,7 @@ let
         "mpv" # playback for the YouTube Music TUIs (ytm-player loads libmpv)
         "yt-dlp"
         "involvex/youtube-music-cli/youtube-music-cli" # ymc, YouTube Music TUI
-        # tools/harness: proof capture (pod/verify) and OpenRig seats
+        # tools/harness: proof capture and terminal recordings
         "ffmpeg"
         "vhs"
         "d2"

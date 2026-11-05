@@ -4,8 +4,7 @@
 }:
 let
   common = {
-    claude = "${workspace}/tools/harness/go/cmd/claude/main.sh"; # --omp | --codex | --rig pick another harness
-    rig = "${workspace}/tools/harness/go/cmd/claude/main.sh --rig"; # OpenRig CLI with the harness wiring
+    claude = "${workspace}/tools/harness/go/cmd/claude/main.sh"; # --omp | --codex | --oc pick another harness
     omp = "${workspace}/tools/harness/go/cmd/claude/main.sh --omp"; # omp with the harness config (one config dir)
     ls = "eza";
     cd = "z";
