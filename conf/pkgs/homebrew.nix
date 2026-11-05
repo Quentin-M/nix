@@ -90,6 +90,7 @@ let
         "claude-code@latest"
         "elgato-wave-link"
         "hammerspoon" # volume keys -> Wave Link mix (conf/hammerspoon)
+        "focusrite-control" # Scarlett 6i6 2nd gen; focusrite-control-2 only drives 4th gen+
         "obsidian"
         "typewhisper/tap/typewhisper"
       ];

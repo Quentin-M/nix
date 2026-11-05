@@ -1,11 +1,11 @@
--- Volume up/down keys (Razer dial) drive the Wave Link "Speakers/Headphones" mix whenever the
+-- Volume up/down keys (Razer dial) drive the Wave Link mix on the main output whenever the
 -- output device has no volume control of its own (Scarlett 6i6). Talks to Wave Link's
 -- local JSON-RPC websocket - the Stream Deck API, which needs Origin streamdeck:// - via websocat.
 hs.autoLaunch(true)
 hs.dockIcon(false)
 require("hs.ipc") -- CLI: /Applications/Hammerspoon.app/Contents/Frameworks/hs/hs -c '<lua>'
 
-local MIX, STEP = "Speakers/Headphones", 0.05
+local STEP = 0.05
 local WEBSOCAT = "/etc/profiles/per-user/" .. os.getenv("USER") .. "/bin/websocat"
 
 local ws, buf, pending, nextId = nil, "", {}, 0
@@ -36,10 +36,24 @@ local function send(method, params, cb)
   ws:setInput(hs.json.encode({jsonrpc = "2.0", id = nextId, method = method, params = params}) .. "\n")
 end
 
+-- The mix routed to Wave Link's main output, so renaming a mix never breaks the dial.
+local function mainMixId(o)
+  local main = o.mainOutput
+  for _, d in ipairs(o.outputDevices) do
+    if d.id == main.outputDeviceId then
+      for _, out in ipairs(d.outputs) do
+        if out.id == main.outputId then return out.mixId end
+      end
+    end
+  end
+end
+
 function adjust(key)
-  send("getMixes", nil, function(r)
+  send("getOutputDevices", nil, function(o)
+   local mixId = mainMixId(o)
+   send("getMixes", nil, function(r)
     for _, m in ipairs(r and r.mixes or {}) do
-      if m.name == MIX then
+      if m.id == mixId then
         local p = {id = m.id, isMuted = not m.isMuted}
         if key ~= "MUTE" then
           p.isMuted = false
@@ -50,6 +64,7 @@ function adjust(key)
         hs.alert.show(p.isMuted and "🔇" or string.format("🔊 %d%%", math.floor((p.level or m.level) * 100 + 0.5)), 0.5)
       end
     end
+   end)
   end)
 end
 

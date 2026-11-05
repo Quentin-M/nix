@@ -24,7 +24,7 @@ Install them from Wave Link → Marketplace → Audio effects; `make nix` lists 
 
 ## Volume keys
 
-`conf/hammerspoon/init.lua` maps the keyboard volume keys to the Speakers/Headphones mix when
+`conf/hammerspoon/init.lua` maps the keyboard volume keys to the main-output mix when
 the output device has no volume of its own, and the mute key to the Scarlett Monitor 1-2 mute
 (speakers only, headphones on Line 3-4 keep playing). Grant Hammerspoon Accessibility access once,
 and approve the "q-hammerspoon" client in Focusrite Control once.
