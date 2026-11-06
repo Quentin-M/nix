@@ -8,8 +8,9 @@
   workspace,
   ...
 }: let
-  # Repo checkout, for out-of-store symlinks that apps write back to.
+  # Repo checkouts, for out-of-store symlinks that apps write back to.
   repo = "${workspace}/infra/nix";
+  harness = "${workspace}/tools/harness";
 
   shellAliases = import ../conf/shell/aliases.nix {
     inherit workspace;
@@ -140,13 +141,13 @@ in
         fi
       '';
 
-      # Herdr app: carries every file of conf/herdr-app into ~/.config/herdr-app, which the app
-      # owns otherwise. Linked so the app's writes (zoom, keys) land in the repo; images copied,
-      # since the app never loads those through a link. Swapped in by rename and only when
+      # Herdr app: carries every file of tools/harness/herdr/app into ~/.config/herdr-app, which
+      # the app owns otherwise. Linked so the app's writes (zoom, keys) land in the repo; images
+      # copied, since the app never loads those through a link. Swapped in by rename and only when
       # different: the app reloads on every change and keeps what it read mid-swap. Its watcher
-      # skips link targets: after editing a mod here, `touch -h` its main.js link.
+      # skips link targets: after editing a mod there, `touch -h` its main.js link.
       activation.setupHerdrApp = config.lib.dag.entryAfter ["linkGeneration"] ''
-        src=${repo}/conf/herdr-app
+        src=${harness}/herdr/app
         dst=${config.xdg.configHome}/herdr-app
         (cd "$src" && find . -type f) | while read -r f; do
           f=''${f#./}
@@ -296,7 +297,7 @@ in
     home.file.".hushlogin".text = "";
 
     # Herdr - out-of-store so its settings UI can write back.
-    xdg.configFile."herdr/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/herdr/config.toml";
+    xdg.configFile."herdr/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${harness}/herdr/config.toml";
 
     # iTerm2 - loads all settings from conf/iterm2/com.googlecode.iterm2.plist and writes
     # every change straight back to it (save mode 2 = automatically). Machine-local state
