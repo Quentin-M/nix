@@ -85,7 +85,6 @@ let
         "keka"
         "iina"
         "opendisk" # disk space analyser
-        "fantastical"
         "codex"
         "claude-code@latest"
         "elgato-wave-link"
@@ -114,7 +113,7 @@ let
       home = [
         "/Applications/Brave Browser.app"
         "/System/Applications/Mail.app"
-        "/Applications/Fantastical.app"
+        "/System/Applications/Calendar.app"
         "/Applications/Claude.app"
         "/Applications/Zed.app"
         "/Applications/iTerm.app"
