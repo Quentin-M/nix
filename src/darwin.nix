@@ -69,11 +69,6 @@ in {
       orientation = "bottom";
       showhidden = false;
       show-recents = true;
-      persistent-apps = hb.dock;
-      # fan display / sorting: https://github.com/nix-darwin/nix-darwin/issues/982
-      persistent-others = [
-        "/Users/${user}/Downloads/"
-      ];
     };
 
     # Finder

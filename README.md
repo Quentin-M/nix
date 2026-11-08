@@ -11,19 +11,19 @@ git clone git@github.com:Quentin-M/nix.git ~/.config/nixpkgs
 
 ### MacOS
 
-Launch each app once, grant what it asks in System Settings → Privacy & Security, and turn on
-`Launch at login` in its settings:
+Launch each app once and grant what it asks in System Settings → Privacy & Security. Nix sets
+Login Items from `loginItems` in `conf/pkgs/homebrew.nix`:
 
 | App | Permissions | Notes |
 | --- | --- | --- |
 | Tinycast | Accessibility | Cmd+Space is set by nix (Spotlight's shortcut is disabled). Settings → Extensions: turn on, then Search extensions → install **Coffee** (`caff` → "Caffeinate for…", type a duration) |
-| Loop | Accessibility | |
 | Dimble | Accessibility, Screen Recording | Screen Recording is optional: animations and Live Activities need it |
+| DockDoor Pro | Accessibility, Screen Recording | Replaces the Dock. Settings sync with `dockdoor backup\|restore` (`conf/dockdoor/README.md`). Paid: $20 license, 14-day trial |
 | Hammerspoon | Accessibility | Volume keys -> Wave Link |
 | Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings |
 | Stats | | |
-| LuLu (personal only) | System Settings → General → Login Items & Extensions → Network Extensions: allow LuLu, then Allow its filter configuration | Starts at login by itself |
-| OpenDisk | Full Disk Access, to scan system folders | No login item needed |
+| LuLu (personal only) | System Settings → General → Login Items & Extensions → Network Extensions: allow LuLu, then Allow its filter configuration | |
+| OpenDisk | Full Disk Access, to scan system folders | |
 
 - Set 1Password to Cmd+Shift+P
   - Enable its menu bar icon to keep it alive

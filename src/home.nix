@@ -12,6 +12,9 @@
   repo = "${workspace}/infra/nix";
   harness = "${workspace}/tools/harness";
 
+  inherit (import ../conf/pkgs/homebrew.nix { inherit isPro; }) loginItems;
+  dockdoorVariant = if isPro then "pro" else "home";
+
   shellAliases = import ../conf/shell/aliases.nix {
     inherit workspace;
     inherit (pkgs.stdenv) isDarwin;
@@ -136,7 +139,8 @@ in
         if command -v herdr &>/dev/null; then
           for agent in claude omp codex; do
             herdr integration status 2>/dev/null | grep -q "^$agent: current" \
-              || $DRY_RUN_CMD herdr integration install "$agent"
+              || $DRY_RUN_CMD herdr integration install "$agent" \
+              || echo "herdr: skipped $agent integration (agent not installed yet), rerun after first launch"
           done
         fi
       '';
@@ -188,6 +192,39 @@ in
           $DRY_RUN_CMD /usr/bin/defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 \
             '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>1048576</integer></array><key>type</key><string>standard</string></dict></dict>'
           $DRY_RUN_CMD /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+        fi
+      '';
+
+      # Login Items match conf/pkgs/homebrew.nix: stale ones removed, missing ones added.
+      # Apps not installed yet are skipped until the next switch.
+      activation.setupLoginItems = config.lib.dag.entryAfter ["writeBoundary"] ''
+        if [[ "$(uname)" == "Darwin" ]]; then
+          want=()
+          for app in ${pkgs.lib.escapeShellArgs loginItems}; do
+            [[ -d $app ]] && want+=("$app")
+          done
+          $DRY_RUN_CMD /usr/bin/osascript - "''${want[@]}" <<'APPLESCRIPT'
+        on run argv
+          tell application "System Events"
+            repeat with i from (count of login items) to 1 by -1
+              set p to path of login item i
+              if p is missing value or argv does not contain p then delete login item i
+            end repeat
+            set have to path of every login item
+            repeat with p in argv
+              if have does not contain (contents of p) then make login item at end with properties {path:(contents of p), hidden:false}
+            end repeat
+          end tell
+        end run
+        APPLESCRIPT
+        fi
+      '';
+
+      # DockDoor Pro: seed the repo settings on a Mac that never configured it;
+      # `dockdoor backup|restore` syncs after that (conf/dockdoor/README.md).
+      activation.setupDockDoor = config.lib.dag.entryAfter ["writeBoundary"] ''
+        if [[ "$(uname)" == "Darwin" && -d "/Applications/DockDoor Pro.app" ]]; then
+          $DRY_RUN_CMD "${repo}/conf/dockdoor/dockdoor.sh" ${dockdoorVariant} seed
         fi
       '';
 
@@ -416,6 +453,13 @@ in
 
     # Hammerspoon (volume keys -> Wave Link) and the Wave Link config sync script
     home.file.".hammerspoon".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/hammerspoon";
+    home.file.".local/bin/dockdoor" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        exec "${repo}/conf/dockdoor/dockdoor.sh" ${dockdoorVariant} "$@"
+      '';
+    };
     home.file.".local/bin/wavelink".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/wavelink/wavelink.sh";
 
     # Privileges.app grants admin before sudo, for make and scripts too (~/.local/bin precedes /usr/bin)

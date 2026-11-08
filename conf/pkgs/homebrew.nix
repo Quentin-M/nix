@@ -80,9 +80,11 @@ let
         "1password-cli"
         "tinycast" # launcher on Cmd+Space (home.nix)
         "fif7y/tap/dimble" # menu bar manager
-        "loop" # window manager
+        "dockdoor-pro" # Dock replacement
         "stats"
         "keka"
+        "whatsapp"
+        "bloom" # Finder replacement
         "iina"
         "opendisk" # disk space analyser
         "codex"
@@ -108,27 +110,20 @@ let
       ];
     in common ++ (if isPro then pro else home);
 
-  dock =
+  # Login Items, applied by home.nix: exactly this list, anything else is removed.
+  loginItems =
     let
+      common = [
+        "/Applications/Tinycast.app"
+        "/Applications/Dimble.app"
+        "/Applications/DockDoor Pro.app"
+        "/Applications/Hammerspoon.app"
+        "/Applications/BetterShot.app"
+        "/Applications/Stats.app"
+      ];
       home = [
-        "/Applications/Brave Browser.app"
-        "/System/Applications/Mail.app"
-        "/System/Applications/Calendar.app"
-        "/Applications/Claude.app"
-        "/Applications/Zed.app"
-        "/Applications/iTerm.app"
-        "/Applications/Herdr.app"
+        "/Applications/LuLu.app"
       ];
-      pro = [
-        "/Applications/Brave Browser.app"
-        "/Applications/Google Chrome.app"
-        "/System/Applications/Calendar.app"
-        "/System/Applications/Mail.app"
-        "/Applications/Slack.app"
-        "/Applications/Zed.app"
-        "/Applications/iTerm.app"
-        "/Applications/Herdr.app"
-      ];
-    in if isPro then pro else home;
+    in common ++ (if isPro then [] else home);
 
-in { inherit taps brews casks dock; }
+in { inherit taps brews casks loginItems; }
