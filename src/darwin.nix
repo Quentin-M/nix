@@ -84,9 +84,12 @@ in {
       CreateDesktop = false;
       ShowPathbar = true;
       ShowStatusBar = true;
-      FXPreferredViewStyle = "Nlsv";
+      FXPreferredViewStyle = "icnv";
       FXEnableExtensionChangeWarning = false;
     };
+
+    # Finder default icon view arranged by name (folders with a .DS_Store keep their own)
+    CustomUserPreferences."com.apple.finder".FK_StandardViewSettings.IconViewSettings.arrangeBy = "name";
 
     # Trackpad
     trackpad = {
