@@ -18,7 +18,7 @@ Launch each app once, grant what it asks in System Settings → Privacy & Securi
 | --- | --- | --- |
 | Tinycast | Accessibility | Cmd+Space is set by nix (Spotlight's shortcut is disabled). Settings → Extensions: turn on, then Search extensions → install **Coffee** (`caff` → "Caffeinate for…", type a duration) |
 | Loop | Accessibility | |
-| Thaw | Accessibility, Screen Recording | |
+| Dimble | Accessibility, Screen Recording | Screen Recording is optional: animations and Live Activities need it |
 | Hammerspoon | Accessibility | Volume keys -> Wave Link |
 | Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings |
 | Stats | | |

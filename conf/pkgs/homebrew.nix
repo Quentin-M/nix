@@ -6,8 +6,8 @@ let
       common = [
         "multiplex-term/tap"
         "typewhisper/tap"
+        "fif7y/tap"
         { name = "involvex/youtube-music-cli"; clone_target = "https://github.com/involvex/youtube-music-cli.git"; }
-        { name = "abue-ammar/tinycast"; trusted = true; }
       ];
       home = [
         "hashicorp/tap"
@@ -78,8 +78,8 @@ let
         "postico"
         "1password"
         "1password-cli"
-        "abue-ammar/tinycast/tinycast" # launcher on Cmd+Space (home.nix)
-        "thaw" # menu bar manager
+        "tinycast" # launcher on Cmd+Space (home.nix)
+        "fif7y/tap/dimble" # menu bar manager
         "loop" # window manager
         "stats"
         "keka"
