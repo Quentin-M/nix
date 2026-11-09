@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>application</key>
+	<integer>1</integer>
+	<key>custom</key>
+	<string>on alfred_script(q)
+        set h to "/etc/profiles/per-user/$USER/bin/herdr"
+        do shell script "p=$(" &amp; h &amp; " tab create --focus --label alfred | /usr/bin/plutil -extract result.root_pane.pane_id raw -o - -) &amp;&amp; " &amp; h &amp; " pane run \"$p\" " &amp; quoted form of q
+        tell application "Herdr" to activate
+end alfred_script</string>
+</dict>
+</plist>

@@ -78,7 +78,7 @@ let
         "postico"
         "1password"
         "1password-cli"
-        "tinycast" # launcher on Cmd+Space (home.nix)
+        "alfred" # launcher on Cmd+Space (home.nix)
         "fif7y/tap/dimble" # menu bar manager
         "dockdoor-pro" # Dock replacement
         "stats"
@@ -114,7 +114,7 @@ let
   loginItems =
     let
       common = [
-        "/Applications/Tinycast.app"
+        "/Applications/Alfred 5.app"
         "/Applications/Dimble.app"
         "/Applications/DockDoor Pro.app"
         "/Applications/Hammerspoon.app"

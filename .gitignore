@@ -1,3 +1,6 @@
 result/
 .vagrant/
 conf/weechat/sec.conf
+conf/alfred/Alfred.alfredpreferences/remote/
+# Workflow user configuration can hold API keys
+conf/alfred/Alfred.alfredpreferences/workflows/*/prefs.plist
