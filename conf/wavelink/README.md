@@ -3,8 +3,10 @@
 `config.json` holds every mix, channel, route and effect setting (plugin state is embedded).
 `make nix` seeds it on a Mac that has no Wave Link config yet; after that, sync by hand:
 
-- `wavelink backup` - copy the live config into the repo, then commit.
-- `wavelink restore` - quit Wave Link, copy the repo config over the live one, relaunch.
+- `appsync backup` - copy the live config into the repo, then commit.
+- `appsync restore` - quit Wave Link, copy the repo config over the live one, relaunch.
+
+`wavelink.sh level [0..1]` reads or sets the main-output mix level, which has no slider in the UI.
 
 The mic channel is bound to the Scarlett 6i6 (serial 00079550). On a Mac with other hardware,
 re-add the mic channel and its effects.

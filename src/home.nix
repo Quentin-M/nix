@@ -167,24 +167,15 @@ in
         done
       '';
 
-      # Wave Link: seed the repo config on a fresh Mac (it rewrites the file, so no symlink;
-      # `wavelink backup|restore` syncs after that) and list Marketplace plugins to install.
-      activation.setupWaveLink = config.lib.dag.entryAfter ["writeBoundary"] ''
+      # DockDoor Pro, Wave Link, Alfred: a new Mac takes the repo settings once;
+      # `appsync backup|restore` syncs after that.
+      activation.setupAppSettings = config.lib.dag.entryAfter ["writeBoundary"] ''
         if [[ "$(uname)" == "Darwin" ]]; then
-          wl="$HOME/Library/Application Support/com.elgato.WaveLink3"
-          if [[ ! -f $wl/config.json ]]; then
-            $DRY_RUN_CMD mkdir -p "$wl"
-            $DRY_RUN_CMD cp "${repo}/conf/wavelink/config.json" "$wl/config.json"
-            $DRY_RUN_CMD chmod 644 "$wl/config.json"
-          fi
-          for c in MONOCORE ElgatoNoiseRemoval ElgatoCompressor ElgatoEq ElgatoDeEsser; do
-            ls -d "$HOME/Library/Audio/Plug-Ins/Components/$c"*.component &>/dev/null \
-              || echo "Wave Link: install the $c plugin from Marketplace"
-          done
+          $DRY_RUN_CMD "${repo}/conf/shell/appsync.sh" seed
         fi
       '';
 
-      # Free Cmd+Space for Tinycast: disable Spotlight's "Show Spotlight search" (id 64).
+      # Free Cmd+Space for Alfred: disable Spotlight's "Show Spotlight search" (id 64).
       # -dict-add edits one entry; a plain write would replace every symbolic hotkey.
       activation.disableSpotlightHotkey = config.lib.dag.entryAfter ["writeBoundary"] ''
         if [[ "$(uname)" == "Darwin" ]]; then
@@ -216,14 +207,6 @@ in
           end tell
         end run
         APPLESCRIPT
-        fi
-      '';
-
-      # DockDoor Pro: seed the repo settings once per Mac;
-      # `dockdoor backup|restore` syncs after that (conf/dockdoor/README.md).
-      activation.setupDockDoor = config.lib.dag.entryAfter ["writeBoundary"] ''
-        if [[ "$(uname)" == "Darwin" && -d "/Applications/DockDoor Pro.app" ]]; then
-          $DRY_RUN_CMD "${repo}/conf/dockdoor/dockdoor.sh" seed
         fi
       '';
 
@@ -347,11 +330,6 @@ in
       NoSyncNeverRemindPrefsChangesLostForFile_selection = 2;
     };
 
-    # Tinycast palette on Cmd+Space: its HotKeyBinding JSON, kVK_Space (49) + cmdKey (256).
-    targets.darwin.defaults."com.tinycast.app" = lib.mkIf stdenv.isDarwin {
-      "hotkey.togglePalette" = ''{"combo":{"_0":{"carbonKeyCode":49,"carbonModifiers":256}}}'';
-    };
-
     # Git
     programs.git = {
       enable = true;
@@ -450,16 +428,17 @@ in
     # Weechat
     home.file.".config/weechat".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/weechat";
 
-    # Hammerspoon (volume keys -> Wave Link) and the Wave Link config sync script
+    # Hammerspoon (volume keys -> Wave Link)
     home.file.".hammerspoon".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/hammerspoon";
-    home.file.".local/bin/dockdoor" = {
+
+    # App settings <-> repo: DockDoor Pro, Wave Link, Alfred
+    home.file.".local/bin/appsync" = {
       executable = true;
       text = ''
         #!/usr/bin/env bash
-        exec "${repo}/conf/dockdoor/dockdoor.sh" "$@"
+        exec "${repo}/conf/shell/appsync.sh" "$@"
       '';
     };
-    home.file.".local/bin/wavelink".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/wavelink/wavelink.sh";
 
     # Privileges.app grants admin before sudo, for make and scripts too (~/.local/bin precedes /usr/bin)
     home.file.".local/bin/sudo" = lib.mkIf isPro { source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/shell/sudo.sh"; };

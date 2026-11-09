@@ -16,9 +16,9 @@ Login Items from `loginItems` in `conf/pkgs/homebrew.nix`:
 
 | App | Permissions | Notes |
 | --- | --- | --- |
-| Tinycast | Accessibility | Cmd+Space is set by nix (Spotlight's shortcut is disabled). Settings → Extensions: turn on, then Search extensions → install **Coffee** (`caff` → "Caffeinate for…", type a duration) |
+| Alfred 5 | Accessibility | Activate the Powerpack (Mega Supporter) license. Settings live in `conf/alfred` (`conf/alfred/README.md`); on a fresh Mac launch Alfred once, then rerun nix for the Cmd+Space hotkey (Spotlight's shortcut is disabled) |
 | Dimble | Accessibility, Screen Recording | Screen Recording is optional: animations and Live Activities need it |
-| DockDoor Pro | Accessibility, Screen Recording | Replaces the Dock. Settings sync with `dockdoor backup\|restore` (`conf/dockdoor/README.md`). Paid: $20 license, 14-day trial |
+| DockDoor Pro | Accessibility, Screen Recording | Replaces the Dock. Settings: `conf/dockdoor/README.md`. Paid: $20 license, 14-day trial |
 | Hammerspoon | Accessibility | Volume keys -> Wave Link |
 | Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings |
 | Stats | | |
@@ -29,6 +29,9 @@ Login Items from `loginItems` in `conf/pkgs/homebrew.nix`:
   - Enable its menu bar icon to keep it alive
 
 - Wave Link: install the Marketplace plugins listed in `conf/wavelink/README.md`
+
+- App settings (DockDoor Pro, Wave Link, Alfred): `appsync backup` copies live settings into the
+  repo, then commit; `appsync restore` applies the repo settings after a pull
 
 ## TODO
 

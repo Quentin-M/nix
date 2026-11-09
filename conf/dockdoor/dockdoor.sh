@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# DockDoor Pro settings <-> repo. DockDoor has no iCloud sync, so the repo carries them:
-# backup copies live -> prefs.json, restore copies it back and relaunches the app.
+# DockDoor Pro settings <-> repo, driven by appsync. DockDoor has no iCloud sync, so the repo
+# carries them: backup copies live -> prefs.json, restore copies it back and relaunches the app.
 # Device-bound keys (license token, updater state, window frames, file bookmarks) never
 # leave the Mac. Custom icons travel in icons/, with paths rewritten per machine.
 set -euo pipefail
@@ -21,7 +21,7 @@ quit_app() {
 
 # Writes the repo prefs into the live domain, keeping the device-bound keys already there.
 apply() {
-  [[ -f $prefs ]] || { echo "dockdoor: no $prefs; set DockDoor up on a Mac, then run dockdoor backup" >&2; exit 1; }
+  [[ -f $prefs ]] || { echo "dockdoor: no $prefs; set DockDoor up on a Mac, then run appsync backup" >&2; exit 1; }
   mkdir -p "$icons_live"
   [[ -d $dir/icons ]] && cp "$dir/icons/"* "$icons_live/" 2>/dev/null || true
   tmp="$(mktemp -d)"
@@ -57,7 +57,7 @@ case "$cmd" in
     echo "dockdoor: seeded from $prefs"
     ;;
   *)
-    echo "usage: dockdoor backup|restore|seed" >&2
+    echo "usage: dockdoor.sh backup|restore|seed" >&2
     exit 1
     ;;
 esac
