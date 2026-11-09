@@ -458,8 +458,10 @@
   "enableNotificationBadges": false,
   "enableWindowPreviews": true,
   "folderClickShowsContents": true,
+  "footerZoneLastOpenedPage": "\"fileTray\"",
   "hapticIntensity": "off",
   "hiddenRunningApps": [
+    "com.elgato.WaveLink3",
     "io.tailscale.ipn.macsys"
   ],
   "hideNativeDockInMissionControl": true,
