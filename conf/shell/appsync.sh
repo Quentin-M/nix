@@ -5,6 +5,8 @@
 #   seed     make nix: a new Mac takes the repo settings once; later runs leave live settings alone
 # Apps not installed are skipped; one failing app does not stop the others.
 set -euo pipefail
+# make nix runs this with only nix tools on PATH; the app scripts need plutil, defaults, osascript.
+export PATH="$PATH:/usr/bin:/bin:/usr/sbin:/sbin"
 conf="${APPSYNC_CONF:-$(cd "$(dirname "$0")/.." && pwd)}"
 apps="${APPSYNC_APPS:-/Applications}"
 

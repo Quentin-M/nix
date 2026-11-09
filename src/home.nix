@@ -171,7 +171,7 @@ in
       # `appsync backup|restore` syncs after that.
       activation.setupAppSettings = config.lib.dag.entryAfter ["writeBoundary"] ''
         if [[ "$(uname)" == "Darwin" ]]; then
-          $DRY_RUN_CMD "${repo}/conf/shell/appsync.sh" seed
+          $DRY_RUN_CMD "${repo}/conf/shell/appsync.sh" seed || echo "appsync seed: an app failed, see above; the switch goes on" >&2
         fi
       '';
 

@@ -30,5 +30,11 @@ printf '#!/bin/bash\necho "dockdoor $1" >> "%s/calls"\n' "$tmp" > "$tmp/conf/doc
 check 0 "$(run seed)" "seed: all apps succeed"
 check "dockdoor seed;wavelink seed;bettershot seed;alfred seed;" "$(calls)" "seed: every installed app"
 
+# make nix runs this with nix tools only on PATH: no /usr/bin, so no plutil, defaults or osascript.
+printf '#!/bin/bash\ncommand -v plutil >/dev/null || exit 9\necho "alfred $1" >> "%s/calls"\n' "$tmp" > "$tmp/conf/alfred/alfred.sh"
+: > "$tmp/calls"
+check 0 "$(PATH="$(dirname "$(command -v bash)")" "$here/appsync.sh" seed >/dev/null 2>&1 && echo 0 || echo $?)" "seed: macOS tools found without /usr/bin on PATH"
+check "alfred seed" "$(grep alfred "$tmp/calls")" "seed: Alfred reached under the activation PATH"
+
 check 1 "$(run nope)" "unknown command"
 exit $fail
