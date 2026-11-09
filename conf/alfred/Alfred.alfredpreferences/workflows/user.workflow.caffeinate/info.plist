@@ -7,7 +7,7 @@
 	<key>name</key>
 	<string>Caffeinate</string>
 	<key>description</key>
-	<string>caff 1h | 30m | off</string>
+	<string>caff 1h | 30m | off, decaf</string>
 	<key>connections</key>
 	<dict>
 		<key>9B1C2E0A-0001-4C6F-A1F1-CAFF00000001</key>
@@ -49,6 +49,32 @@
 				<false/>
 			</dict>
 		</array>
+		<key>9B1C2E0A-0005-4C6F-A1F1-CAFF00000005</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9B1C2E0A-0006-4C6F-A1F1-CAFF00000006</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9B1C2E0A-0006-4C6F-A1F1-CAFF00000006</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9B1C2E0A-0004-4C6F-A1F1-CAFF00000004</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>objects</key>
 	<array>
@@ -56,19 +82,47 @@
 			<key>uid</key>
 			<string>9B1C2E0A-0001-4C6F-A1F1-CAFF00000001</string>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>3</integer>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
 				<key>keyword</key>
 				<string>caff</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>./caff.sh preview "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
-				<string>1h · 30m · off · empty = until off</string>
-				<key>text</key>
+				<string>1h · 30m · off</string>
+				<key>title</key>
 				<string>Caffeinate</string>
+				<key>type</key>
+				<integer>11</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
@@ -77,19 +131,47 @@
 			<key>uid</key>
 			<string>9B1C2E0A-0002-4C6F-A1F1-CAFF00000002</string>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>3</integer>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
 				<key>keyword</key>
 				<string>caffeinate</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>./caff.sh preview "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
-				<string>1h · 30m · off · empty = until off</string>
-				<key>text</key>
+				<string>1h · 30m · off</string>
+				<key>title</key>
 				<string>Caffeinate</string>
+				<key>type</key>
+				<integer>11</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
@@ -108,13 +190,13 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string></string>
+				<string>./caff.sh run "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>caff.sh</string>
+				<string></string>
 				<key>type</key>
-				<integer>8</integer>
+				<integer>11</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -138,6 +220,50 @@
 				<string>Caffeinate</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>uid</key>
+			<string>9B1C2E0A-0005-4C6F-A1F1-CAFF00000005</string>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>version</key>
+			<integer>1</integer>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>decaf</string>
+				<key>subtext</key>
+				<string>Stop caff, let the Mac sleep</string>
+				<key>text</key>
+				<string>Decaf</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+		</dict>
+		<dict>
+			<key>uid</key>
+			<string>9B1C2E0A-0006-4C6F-A1F1-CAFF00000006</string>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>version</key>
+			<integer>2</integer>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>./caff.sh run off</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+		</dict>
 	</array>
 	<key>uidata</key>
 	<dict>
@@ -148,7 +274,11 @@
 		<key>9B1C2E0A-0003-4C6F-A1F1-CAFF00000003</key>
 		<dict><key>xpos</key><real>230</real><key>ypos</key><real>95</real></dict>
 		<key>9B1C2E0A-0004-4C6F-A1F1-CAFF00000004</key>
-		<dict><key>xpos</key><real>430</real><key>ypos</key><real>95</real></dict>
+		<dict><key>xpos</key><real>430</real><key>ypos</key><real>160</real></dict>
+		<key>9B1C2E0A-0005-4C6F-A1F1-CAFF00000005</key>
+		<dict><key>xpos</key><real>30</real><key>ypos</key><real>290</real></dict>
+		<key>9B1C2E0A-0006-4C6F-A1F1-CAFF00000006</key>
+		<dict><key>xpos</key><real>230</real><key>ypos</key><real>290</real></dict>
 	</dict>
 </dict>
 </plist>
