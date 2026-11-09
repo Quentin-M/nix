@@ -83,7 +83,6 @@ let
         "dockdoor-pro" # Dock replacement
         "stats"
         "keka"
-        "whatsapp"
         "bloom" # Finder replacement
         "iina"
         "opendisk" # disk space analyser
@@ -98,6 +97,7 @@ let
       home = [
         "lulu" # outbound firewall; the work MDM blocks its network extension
         "discord"
+        "whatsapp"
         "eddie"
         "hashicorp/tap/hashicorp-vagrant"
         "virtualbox"

@@ -15,6 +15,9 @@ import sys
 # Bound to this Mac or to one app session: never synced, kept from live on restore.
 DEVICE_KEYS = {
     "cachedEntitlement",  # license token
+    "desktopProfileMapping",  # profile per display and desktop, keyed by local ids
+    "desktopProfileSessions",
+    "displayProfileMapping",
     "fileTrayPinnedFolders",  # security-scoped bookmarks
     "hasCompletedOnboarding",  # onboarding grants permissions on each Mac
     "knownSettingsSearchIDs",

@@ -13,7 +13,6 @@
   harness = "${workspace}/tools/harness";
 
   inherit (import ../conf/pkgs/homebrew.nix { inherit isPro; }) loginItems;
-  dockdoorVariant = if isPro then "pro" else "home";
 
   shellAliases = import ../conf/shell/aliases.nix {
     inherit workspace;
@@ -220,11 +219,11 @@ in
         fi
       '';
 
-      # DockDoor Pro: seed the repo settings on a Mac that never configured it;
+      # DockDoor Pro: seed the repo settings once per Mac;
       # `dockdoor backup|restore` syncs after that (conf/dockdoor/README.md).
       activation.setupDockDoor = config.lib.dag.entryAfter ["writeBoundary"] ''
         if [[ "$(uname)" == "Darwin" && -d "/Applications/DockDoor Pro.app" ]]; then
-          $DRY_RUN_CMD "${repo}/conf/dockdoor/dockdoor.sh" ${dockdoorVariant} seed
+          $DRY_RUN_CMD "${repo}/conf/dockdoor/dockdoor.sh" seed
         fi
       '';
 
@@ -457,7 +456,7 @@ in
       executable = true;
       text = ''
         #!/usr/bin/env bash
-        exec "${repo}/conf/dockdoor/dockdoor.sh" ${dockdoorVariant} "$@"
+        exec "${repo}/conf/dockdoor/dockdoor.sh" "$@"
       '';
     };
     home.file.".local/bin/wavelink".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/wavelink/wavelink.sh";
