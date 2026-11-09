@@ -167,7 +167,7 @@ in
         done
       '';
 
-      # DockDoor Pro, Wave Link, Alfred: a new Mac takes the repo settings once;
+      # DockDoor Pro, Wave Link, BetterShot, Alfred: a new Mac takes the repo settings once;
       # `appsync backup|restore` syncs after that.
       activation.setupAppSettings = config.lib.dag.entryAfter ["writeBoundary"] ''
         if [[ "$(uname)" == "Darwin" ]]; then
@@ -431,7 +431,7 @@ in
     # Hammerspoon (volume keys -> Wave Link)
     home.file.".hammerspoon".source = config.lib.file.mkOutOfStoreSymlink "${repo}/conf/hammerspoon";
 
-    # App settings <-> repo: DockDoor Pro, Wave Link, Alfred
+    # App settings <-> repo: DockDoor Pro, Wave Link, BetterShot, Alfred
     home.file.".local/bin/appsync" = {
       executable = true;
       text = ''

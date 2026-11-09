@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # App settings <-> repo, for every app the repo carries settings for.
-#   backup   live -> repo: DockDoor and Wave Link copy; Alfred already writes into the repo
+#   backup   live -> repo: DockDoor, Wave Link and BetterShot copy; Alfred already writes into the repo
 #   restore  repo -> live: each app quits, takes the repo settings, relaunches
 #   seed     make nix: a new Mac takes the repo settings once; later runs leave live settings alone
 # Apps not installed are skipped; one failing app does not stop the others.
@@ -22,17 +22,20 @@ case "${1:-}" in
   backup)
     sync "DockDoor Pro" "$conf/dockdoor/dockdoor.sh" backup
     sync "Elgato Wave Link" "$conf/wavelink/wavelink.sh" backup
+    sync "BetterShot" "$conf/bettershot/bettershot.sh" backup
     echo "alfred: writes into $conf/alfred live, nothing to copy"
-    git -C "$conf" status --short -- dockdoor wavelink alfred 2>/dev/null || true
+    git -C "$conf" status --short -- dockdoor wavelink bettershot alfred 2>/dev/null || true
     ;;
   restore)
     sync "DockDoor Pro" "$conf/dockdoor/dockdoor.sh" restore
     sync "Elgato Wave Link" "$conf/wavelink/wavelink.sh" restore
+    sync "BetterShot" "$conf/bettershot/bettershot.sh" restore
     sync "Alfred 5" "$conf/alfred/alfred.sh" restore
     ;;
   seed)
     sync "DockDoor Pro" "$conf/dockdoor/dockdoor.sh" seed
     sync "Elgato Wave Link" "$conf/wavelink/wavelink.sh" seed
+    sync "BetterShot" "$conf/bettershot/bettershot.sh" seed
     sync "Alfred 5" "$conf/alfred/alfred.sh" seed
     ;;
   *)

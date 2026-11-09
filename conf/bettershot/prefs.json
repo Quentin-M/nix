@@ -1,0 +1,68 @@
+{
+  "afterCapture.screenshot.save": true,
+  "annotationBackgroundPresetLibrary.v1": {
+    "$data": {
+      "presets": [],
+      "version": 1
+    }
+  },
+  "annotationStylePreset": {
+    "$data": {
+      "redactionDensity": 0.55,
+      "selectedToolRawValue": "freehand",
+      "strokeWidth": 4,
+      "swatchID": "red",
+      "textAlignmentRawValue": 0,
+      "textFontName": "pro",
+      "textFontSize": 48,
+      "textIsBold": true,
+      "textIsItalic": false,
+      "textIsUnderline": false
+    }
+  },
+  "bs_captureShortcuts050Restored": true,
+  "bs_copyAfterSave": true,
+  "bs_defaultBeautifierConfig": {
+    "$data": {
+      "alignment": "center",
+      "aspectRatio": "Auto",
+      "cornerRadius": 0.018,
+      "grade": {
+        "contrast": 0,
+        "exposure": 0,
+        "fade": 0,
+        "grain": 0,
+        "intensity": 1,
+        "saturation": 0,
+        "splitTone": 0,
+        "temperature": 0,
+        "tint": 0,
+        "vignette": 0
+      },
+      "padding": 0.08,
+      "shadowStrength": 0.36,
+      "style": {
+        "bundledImage": {
+          "_0": "mac-9"
+        }
+      }
+    }
+  },
+  "bs_freezeScreenDuringRegionCapture": true,
+  "bs_historyRetentionLimit": 0,
+  "bs_openEditorAfterCapture": false,
+  "bs_openEditorAfterRecording": false,
+  "bs_overlayToolLayout": {
+    "$data": {
+      "bottomLeft": "edit",
+      "bottomRight": "share",
+      "centerLeft": "copy",
+      "centerRight": "save",
+      "topLeft": "pin",
+      "topRight": "dismiss"
+    }
+  },
+  "bs_preselectPreviousRegion": false,
+  "bs_previousRegionDefault057": true,
+  "bs_saveDirectory": "@HOME@/Pictures/Screenshots"
+}

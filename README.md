@@ -20,7 +20,7 @@ Login Items from `loginItems` in `conf/pkgs/homebrew.nix`:
 | Dimble | Accessibility, Screen Recording | Screen Recording is optional: animations and Live Activities need it |
 | DockDoor Pro | Accessibility, Screen Recording | Replaces the Dock. Settings: `conf/dockdoor/README.md`. Paid: $20 license, 14-day trial |
 | Hammerspoon | Accessibility | Volume keys -> Wave Link |
-| Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings |
+| Better Shot | Screen Recording, Accessibility | Input Monitoring for cursor effects, Microphone/Camera for narrated recordings. Settings: `conf/bettershot/README.md` |
 | Stats | | |
 | LuLu (personal only) | System Settings → General → Login Items & Extensions → Network Extensions: allow LuLu, then Allow its filter configuration | |
 | OpenDisk | Full Disk Access, to scan system folders | |
@@ -30,7 +30,7 @@ Login Items from `loginItems` in `conf/pkgs/homebrew.nix`:
 
 - Wave Link: install the Marketplace plugins listed in `conf/wavelink/README.md`
 
-- App settings (DockDoor Pro, Wave Link, Alfred): `appsync backup` copies live settings into the
+- App settings (DockDoor Pro, Wave Link, BetterShot, Alfred): `appsync backup` copies live settings into the
   repo, then commit; `appsync restore` applies the repo settings after a pull
 
 ## TODO
