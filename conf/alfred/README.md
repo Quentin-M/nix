@@ -9,7 +9,7 @@ Alfred Preferences land in the repo as you make them; commit them.
   auto-expand. A new Mac copies them once from the Mac that last seeded: launch Alfred, then
   rerun `make nix`.
 - `snippets/`, `workflows/` - Gallery workflows update themselves in place.
-- `workflows/user.workflow.caffeinate/` - `caff 1h`, `caff 30m`, `caff off`.
+- `workflows/user.workflow.caffeinate/` - `caff 1h`, `caff 30m`, `caff off` (also `decaf`, `uncaffeinate`). Blocks every sleep, display unplug included, via a sudoers rule in `src/darwin.nix`.
 
 `appsync restore` relaunches Alfred after a pull. Out of git: `remote/` (Alfred Remote cache) and
 `workflows/*/prefs.plist` (workflow configuration, which can hold API keys). The license and the

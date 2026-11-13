@@ -8,7 +8,8 @@ trap 'pkill -f "$tmp/bin/caffeinate" 2>/dev/null || true; kill "${holder:-}" 2>/
 mkdir -p "$tmp/bin"
 printf '#!/bin/bash\necho "$*" >> "%s/calls"\nsleep 30\n' "$tmp" > "$tmp/bin/caffeinate"
 printf '#!/bin/bash\necho "${@: -1}" >> "%s/alerts"\n' "$tmp" > "$tmp/bin/hs"
-chmod +x "$tmp/bin/caffeinate" "$tmp/bin/hs"
+printf '#!/bin/bash\necho "$*" >> "%s/sudo"\n[[ -e "%s/nosudo" ]] && exit 1\nexit 0\n' "$tmp" "$tmp" > "$tmp/bin/sudo"
+chmod +x "$tmp/bin/caffeinate" "$tmp/bin/hs" "$tmp/bin/sudo"
 # Like Alfred: stdin is an open pipe, which makes a real hs read it after -c and hang.
 exec < <(sleep 600)
 holder=$!
@@ -40,16 +41,16 @@ check "Allow sleep | Now: sleep allowed | off | True" "$(title off)" "preview of
 check "Usage: caff 1h · 30m · off | Now: sleep allowed |  | False" "$(title '"x\"}')" "preview garbage: invalid row, valid JSON"
 
 matches "^Awake for 1 min, until [0-9]{2}:[0-9]{2}$" "$(run 1min 2>&1)" "1min runs, says until when"
-check "-di -t 60" "$(last_call)" "1min -> 60 s"
+check "-dims -t 60" "$(last_call)" "1min -> 60 s"
 matches '^hs.alert.show\("☕ Awake for 1 min, until [0-9]{2}:[0-9]{2}", 2\)$' "$(last_alert)" "1min: on-screen alert"
 matches "\\| Now: awake until [0-9]{2}:[0-9]{2} \\|" "$(title 5m 2>&1)" "preview shows the running state"
 matches "^Awake for 1 h, until [0-9]{2}:[0-9]{2}$" "$(run 1 2>&1)" "bare number is hours"
-check "-di -t 3600" "$(last_call)" "1 -> 3600 s"
+check "-dims -t 3600" "$(last_call)" "1 -> 3600 s"
 check "2" "$(running)" "previous caff replaced, foreign kept"
 matches "^Awake for 30 min, until [0-9]{2}:[0-9]{2}$" "$(run 30minutes 2>&1)" "minutes spelled out"
-check "-di -t 1800" "$(last_call)" "30minutes -> 1800 s"
+check "-dims -t 1800" "$(last_call)" "30minutes -> 1800 s"
 check "Awake until caff off" "$(run)" "no argument"
-check "-di" "$(last_call)" "no argument -> no timeout"
+check "-dims" "$(last_call)" "no argument -> no timeout"
 check "Keep awake for 5 min | Now: awake until caff off | 5m | True" "$(title 5m)" "preview shows endless state"
 check "Usage: caff 1h · 30m · off" "$(run 0)" "zero rejected"
 check 'hs.alert.show("☕ Usage: caff 1h · 30m · off", 2)' "$(last_alert)" "rejected input: on-screen alert"
@@ -64,5 +65,22 @@ check "Keep awake for 5 min | Now: sleep allowed | 5m | True" "$(title 5m)" "pre
 echo "99999 -" > "$tmp/data/caffeinate.pid"
 check "Now: sleep allowed" "$(title 5m | cut -d'|' -f2 | xargs)" "stale state file reads as asleep"
 check "Sleep allowed" "$(run off)" "stale state file"
+
+: > "$tmp/sudo"
+run 5m >/dev/null 2>&1
+check "-n /usr/bin/pmset -a disablesleep 1" "$(tail -1 "$tmp/sudo")" "start: disablesleep on"
+run off >/dev/null 2>&1
+check "-n /usr/bin/pmset -a disablesleep 0" "$(tail -1 "$tmp/sudo")" "off: disablesleep restored"
+
+: > "$tmp/sudo"
+printf '#!/bin/bash\necho "$*" >> "%s/calls"\nsleep 1\n' "$tmp" > "$tmp/bin/caffeinate"
+run 1m >/dev/null 2>&1
+sleep 2.5
+check "-n /usr/bin/pmset -a disablesleep 0" "$(tail -1 "$tmp/sudo")" "caffeinate ends by itself: disablesleep restored"
+run off >/dev/null 2>&1
+
+touch "$tmp/nosudo"
+matches "\\(sudo rule missing: run make nix\\)$" "$(run 5m 2>&1)" "no sudo rule: still awake, warns"
+run off >/dev/null 2>&1
 
 exit $fail

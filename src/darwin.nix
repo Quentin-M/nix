@@ -113,6 +113,12 @@ in {
     reattach = true;
   };
 
+  # The Alfred caffeinate workflow runs without a tty, so it cannot prompt: it may flip
+  # disablesleep (sleep on display unplug and lid close) and nothing else.
+  security.sudo.extraConfig = ''
+    ${user} ALL=(root) NOPASSWD: /usr/bin/pmset -a disablesleep 0, /usr/bin/pmset -a disablesleep 1
+  '';
+
   # Also set in home.nix; here it makes nix-darwin write /etc/zshenv to load the environment.
   # Zim's completion module owns compinit; the global one in /etc/zshrc makes it warn.
   # Starship owns the prompt; the default `promptinit; prompt suse` only costs startup time.
